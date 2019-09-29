@@ -18,6 +18,10 @@ const UserSchema = new Schema({
   register_date: {
     type: Date,
     default: Date.now
+  },
+  favorite_books: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Book"
   }
 });
 
