@@ -14,10 +14,12 @@ app.use(express.json());
 app.use(routes);
 
 // Connect to the Mongo DB
+//|| "mongodb://localhost/googleBookSearch"
 mongoose
-  .connect(process.env.MONGODB_URI || "mongodb://localhost/googleBookSearch", {
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useUnifiedTopology: true
   })
   .then(() => console.log("MongoDB Connected..."))
   .catch(err => console.log(err));
