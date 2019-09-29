@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Form, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import { connect } from "react-redux";
 import { addBook } from "../actions/bookActions";
-import uuid from "uuid";
 
 class AddModal extends Component {
   state = {
@@ -25,10 +24,12 @@ class AddModal extends Component {
   onSubmit = e => {
     e.preventDefault();
     const newBook = {
-      id: uuid(),
-      name: this.state.name
+      title: this.state.title,
+      authors: this.state.authors || "",
+      description: this.state.description || ""
     };
-    // add with addItem action
+    console.log(newBook);
+    // add with addBook action
     this.props.addBook(newBook);
 
     this.toggle();
@@ -45,7 +46,15 @@ class AddModal extends Component {
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Label for="book">Title</Label>
-                <Input type="text" name="name" id="addBook" onChange={this.onChange} />
+                <Input type="text" name="title" id="addBook" onChange={this.onChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="addAuthors">Author(s)</Label>
+                <Input type="text" name="authors" id="addAuthors" onChange={this.onChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label for="addDesc">Description</Label>
+                <Input type="text" name="description" id="addDesc" onChange={this.onChange} />
               </FormGroup>
               <Button type="submit" color="dark" style={{ marginTop: "2rem" }} block>
                 Save
@@ -58,7 +67,7 @@ class AddModal extends Component {
   }
 }
 const mapStateToProps = state => ({
-  item: state.item
+  book: state.book
 });
 
 export default connect(

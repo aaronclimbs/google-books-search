@@ -1,5 +1,3 @@
-import uuid from "uuid";
-
 import { ADD_BOOK, DELETE_BOOK, GET_BOOKS, BOOKS_LOADING } from "../actions/types";
 
 const initialState = {
@@ -16,6 +14,7 @@ export default function(state = initialState, action) {
         loading: false
       };
     case ADD_BOOK:
+      console.log(action.payload);
       return {
         ...state,
         books: [action.payload, ...state.books]
@@ -23,7 +22,7 @@ export default function(state = initialState, action) {
     case DELETE_BOOK:
       return {
         ...state,
-        books: state.books.filter(book => book.id !== action.payload)
+        books: state.books.filter(book => book._id !== action.payload._id)
       };
     case BOOKS_LOADING:
       return {

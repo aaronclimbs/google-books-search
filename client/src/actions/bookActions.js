@@ -9,20 +9,27 @@ export const getBooks = () => dispatch => {
       payload: res.data
     })
   );
+  // .catch(err => dispatch(returnErrors(err.response.data, err.response.status)));
 };
 
-export const deleteBook = id => {
-  return {
-    type: DELETE_BOOK,
-    payload: id
-  };
+export const deleteBook = id => dispatch => {
+  dispatch(setLoading());
+  axios.delete(`/api/books/${id}`).then(res =>
+    dispatch({
+      type: DELETE_BOOK,
+      payload: res.data
+    })
+  );
 };
 
-export const addBook = book => {
-  return {
-    type: ADD_BOOK,
-    payload: book
-  };
+export const addBook = book => dispatch => {
+  dispatch(setLoading());
+  axios.post("/api/books", book).then(res =>
+    dispatch({
+      type: ADD_BOOK,
+      payload: res.data
+    })
+  );
 };
 
 export const setLoading = () => {
