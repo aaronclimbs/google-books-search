@@ -25,10 +25,9 @@ class AddModal extends Component {
     e.preventDefault();
     const newBook = {
       title: this.state.title,
-      authors: this.state.authors || "",
-      description: this.state.description || ""
+      authors: this.state.authors,
+      description: this.state.description
     };
-    console.log(newBook);
     // add with addBook action
     this.props.addBook(newBook);
 
@@ -37,7 +36,7 @@ class AddModal extends Component {
   render() {
     return (
       <div>
-        <Button color="dark" style={{ margin: "2rem" }} onClick={this.toggle}>
+        <Button color="dark" style={{ margin: "2rem 0" }} onClick={this.toggle}>
           Add Book
         </Button>
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
