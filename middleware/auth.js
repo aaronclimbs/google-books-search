@@ -5,7 +5,7 @@ function auth(req, res, next) {
   const token = req.header("x-auth-token");
 
   // check for token
-  if (!token) res.status(401).json({ msg: "User not authorized" });
+  if (!token) return res.status(401).json({ msg: "User not authorized" });
 
   try {
     // verify token
