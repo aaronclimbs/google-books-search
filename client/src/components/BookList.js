@@ -17,6 +17,7 @@ class BookList extends Component {
 
   render() {
     const { books } = this.props.book;
+    const { isAuthenticated } = this.props.auth;
     return (
       <Container>
         <ListGroup>
@@ -25,15 +26,18 @@ class BookList extends Component {
               return (
                 <CSSTransition key={_id} timeout={500} classNames="fade">
                   <ListGroupItem>
-                    <Button
-                      style={{ margin: "0 1rem" }}
-                      className="remove-btn"
-                      color="danger"
-                      size="sm"
-                      onClick={this.onDeleteClick.bind(this, _id)}
-                    >
-                      &times;
-                    </Button>
+                    {isAuthenticated ? (
+                      <Button
+                        style={{ margin: "0 1rem" }}
+                        className="remove-btn"
+                        color="danger"
+                        size="sm"
+                        onClick={this.onDeleteClick.bind(this, _id)}
+                      >
+                        &times;
+                      </Button>
+                    ) : null}
+
                     {title}
                   </ListGroupItem>
                 </CSSTransition>
@@ -48,11 +52,14 @@ class BookList extends Component {
 
 BookList.propTypes = {
   getBooks: PropTypes.func.isRequired,
-  book: PropTypes.object.isRequired
+  book: PropTypes.object.isRequired,
+  deleteBook: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  book: state.book
+  book: state.book,
+  auth: state.auth
 });
 
 export default connect(
