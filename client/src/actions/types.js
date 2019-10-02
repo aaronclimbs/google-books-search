@@ -1,8 +1,10 @@
 // books
-export const GET_BOOKS = "GET_BOOKS";
+export const GET_BOOKS_FROM_USER = "GET_BOOKS_FROM_USER";
+export const GET_SEARCH_RESULTS = "GET_SEARCH_RESULTS";
 export const ADD_BOOK = "ADD_BOOK";
 export const DELETE_BOOK = "DELETE_BOOK";
 export const BOOKS_LOADING = "BOOKS_LOADING";
+export const ADD_BOOK_TO_USER = "ADD_BOOK_TO_USER";
 
 // user and auth
 export const USER_LOADING = "USER_LOADING";
