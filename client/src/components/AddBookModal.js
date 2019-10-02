@@ -1,9 +1,18 @@
 import React, { Component } from "react";
-import { Form, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import {
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody
+} from "reactstrap";
 import { connect } from "react-redux";
 import { addBook } from "../actions/bookActions";
 
-class AddModal extends Component {
+class AddBookModal extends Component {
   state = {
     modal: false,
     name: ""
@@ -36,26 +45,54 @@ class AddModal extends Component {
   render() {
     return (
       <div>
-        <Button color="dark" style={{ margin: "2rem 0" }} onClick={this.toggle}>
-          Add Book
-        </Button>
+        {this.state.isAuthenticated ? (
+          <Button
+            color="dark"
+            style={{ margin: "2rem 0" }}
+            onClick={this.toggle}
+          >
+            Add Book
+          </Button>
+        ) : (
+          <h4 style={{ margin: "2rem 0" }}>Please log in to manage books.</h4>
+        )}
         <Modal isOpen={this.state.modal} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Add Book</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Label for="book">Title</Label>
-                <Input type="text" name="title" id="addBook" onChange={this.onChange} />
+                <Input
+                  type="text"
+                  name="title"
+                  id="addBook"
+                  onChange={this.onChange}
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="addAuthors">Author(s)</Label>
-                <Input type="text" name="authors" id="addAuthors" onChange={this.onChange} />
+                <Input
+                  type="text"
+                  name="authors"
+                  id="addAuthors"
+                  onChange={this.onChange}
+                />
               </FormGroup>
               <FormGroup>
                 <Label for="addDesc">Description</Label>
-                <Input type="text" name="description" id="addDesc" onChange={this.onChange} />
+                <Input
+                  type="text"
+                  name="description"
+                  id="addDesc"
+                  onChange={this.onChange}
+                />
               </FormGroup>
-              <Button type="submit" color="dark" style={{ marginTop: "2rem" }} block>
+              <Button
+                type="submit"
+                color="dark"
+                style={{ marginTop: "2rem" }}
+                block
+              >
                 Save
               </Button>
             </Form>
@@ -66,10 +103,11 @@ class AddModal extends Component {
   }
 }
 const mapStateToProps = state => ({
-  book: state.book
+  book: state.book,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
 export default connect(
   mapStateToProps,
   { addBook }
-)(AddModal);
+)(AddBookModal);
