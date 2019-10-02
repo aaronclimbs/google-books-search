@@ -1,13 +1,46 @@
 import React, { Component } from "react";
-import axios from "axios";
+import { Form, FormGroup, Input } from "reactstrap";
+import { connect } from "react-redux";
+import { getSearchResults } from "../actions/bookActions";
 
-export default class BookSearch extends Component {
+class BookSearch extends Component {
   state = {
     search: "",
-    results: ""
+    results: {}
+  };
+
+  onChange = e => {
+    this.setState({
+      search: e.target.value
+    });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    const term = this.state.search;
+    this.props.getSearchResults(term);
   };
 
   render() {
-    return <div></div>;
+    return (
+      <div>
+        <Form style={{ margin: "1rem" }} onSubmit={this.onSubmit}>
+          <FormGroup>
+            <Input
+              type="text"
+              name="title"
+              id="addBook"
+              onChange={this.onChange}
+              placeholder="Search Google Books"
+            />
+          </FormGroup>
+        </Form>
+      </div>
+    );
   }
 }
+
+export default connect(
+  null,
+  { getSearchResults }
+)(BookSearch);
