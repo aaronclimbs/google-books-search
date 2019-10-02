@@ -1,14 +1,17 @@
 import React, { Component } from "react";
-import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
+import { Container, ListGroup, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import PropTypes from "prop-types";
 
 import { connect } from "react-redux";
-import { getBooks, deleteBook } from "../actions/bookActions";
+import { getBooks, deleteBook, getBooksFromUser } from "../actions/bookActions";
+import Book from "./Book";
 
 class BookList extends Component {
   componentDidMount() {
-    this.props.getBooks();
+    if (this.props.auth.isAuthenticated) {
+      this.props.getBooksFromUser();
+    }
   }
 
   onDeleteClick = id => {
@@ -16,30 +19,30 @@ class BookList extends Component {
   };
 
   render() {
-    const { books } = this.props.book;
+    const books = this.props.auth.isAuthenticated
+      ? this.props.book.books
+      : this.props.book.searchResults;
     const { isAuthenticated } = this.props.auth;
     return (
       <Container>
         <ListGroup>
           <TransitionGroup className="book-list">
-            {books.map(({ _id, title, author }) => {
+            {books.map(book => {
               return (
-                <CSSTransition key={_id} timeout={500} classNames="fade">
-                  <ListGroupItem>
+                <CSSTransition key={book._id} timeout={500} classNames="fade">
+                  <Book book={book}>
                     {isAuthenticated ? (
                       <Button
                         style={{ margin: "0 1rem" }}
                         className="remove-btn"
                         color="danger"
                         size="sm"
-                        onClick={this.onDeleteClick.bind(this, _id)}
+                        onClick={this.onDeleteClick.bind(this, book._id)}
                       >
                         &times;
                       </Button>
                     ) : null}
-
-                    {title}
-                  </ListGroupItem>
+                  </Book>
                 </CSSTransition>
               );
             })}
@@ -52,6 +55,7 @@ class BookList extends Component {
 
 BookList.propTypes = {
   getBooks: PropTypes.func.isRequired,
+  getBooksFromUser: PropTypes.func.isRequired,
   book: PropTypes.object.isRequired,
   deleteBook: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
@@ -64,5 +68,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getBooks, deleteBook }
+  { getBooks, deleteBook, getBooksFromUser }
 )(BookList);
