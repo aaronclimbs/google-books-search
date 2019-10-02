@@ -7,9 +7,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Navbar from "./components/AppNavbar";
 import BookList from "./components/BookList";
-import BookModal from "./components/AddModal";
+import BookModal from "./components/AddBookModal";
 import { Container } from "reactstrap";
 import { loadUser } from "./actions/authActions";
+import Search from "./components/Search";
 
 export default class App extends Component {
   componentDidMount() {
@@ -20,9 +21,8 @@ export default class App extends Component {
       <Provider store={store}>
         <div>
           <Navbar />
-          <Container>
-            <BookModal />
-          </Container>
+          <Container>{/* <BookModal /> */}</Container>
+          <Search />
           <BookList />
         </div>
       </Provider>
